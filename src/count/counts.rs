@@ -6,7 +6,6 @@ use crate::count::Count;
 use crate::error::{CliError, CliResult};
 use crate::fmt::{self, Format};
 use crate::fsutil;
-use gitignore;
 use crate::language::Language;
 use regex::Regex;
 use std::env;
@@ -31,7 +30,7 @@ pub struct Counts<'c> {
 impl<'c> Counts<'c> {
     pub fn new(cfg: &'c Config) -> Self {
         Counts {
-            cfg: cfg,
+            cfg,
             counts: vec![],
             tot: 0,
             tot_lines: 0,
@@ -105,7 +104,7 @@ impl<'c> Counts<'c> {
         for count in self.counts.iter_mut() {
             debugln!("iter; count={:?};", count);
             let re = if let Some(kw) = count.lang.unsafe_keyword() {
-                Regex::new(&*format!("(.*?)([:^word:]{}[:^word:])(.*)", kw)).unwrap()
+                Regex::new(&format!("(.*?)([:^word:]{}[:^word:])(.*)", kw)).unwrap()
             } else {
                 Regex::new("").unwrap()
             };
@@ -113,7 +112,7 @@ impl<'c> Counts<'c> {
                 debugln!("iter; file={:?};", file);
                 let mut buffer = String::new();
 
-                let mut file_ref = cli_try!(File::open(&file));
+                let mut file_ref = cli_try!(File::open(file));
 
                 match self.cfg.utf8_rule {
                     Utf8Rule::Ignore => {

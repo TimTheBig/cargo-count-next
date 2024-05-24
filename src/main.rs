@@ -207,7 +207,7 @@ mod fmt;
 mod fsutil;
 mod language;
 
-static UTF8_RULES: [&'static str; 3] = ["strict", "lossy", "ignore"];
+static UTF8_RULES: [&str; 3] = ["strict", "lossy", "ignore"];
 
 fn main() {
     debugln!("executing; cmd=cargo-count; args={:?}",

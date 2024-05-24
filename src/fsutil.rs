@@ -1,7 +1,7 @@
 
 use gitignore::File;
 
-use glob;use std::fs;
+use std::fs;
 use std::io::Result;
 use std::path::PathBuf;
 
@@ -29,7 +29,7 @@ pub fn get_all_files(v: &mut Vec<PathBuf>,
         debugln!("Found");
         if result.is_dir() {
             debugln!("It's a dir");
-            let dir = fs::read_dir(&path).unwrap();
+            let dir = fs::read_dir(path).unwrap();
             for entry in dir {
                 let entry = entry.unwrap();
                 let file_path = entry.path();

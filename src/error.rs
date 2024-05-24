@@ -41,7 +41,7 @@ impl CliError {
 
 impl Display for CliError {
     fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        write!(f, "{} {}", Format::Error("error:"), self.description())
+        write!(f, "{} {}", Format::Error("error:"), self.to_string())
     }
 }
 
@@ -49,8 +49,8 @@ impl Error for CliError {
     #[cfg_attr(feature = "lints", allow(match_same_arms))]
     fn description(&self) -> &str {
         match *self {
-            CliError::Generic(ref d) => &*d,
-            CliError::UnknownExt(ref d) => &*d,
+            CliError::Generic(ref d) => d,
+            CliError::UnknownExt(ref d) => d,
             CliError::Unknown => "An unknown fatal error has occurred, please consider filing a bug-report!",
         }
     }

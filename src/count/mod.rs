@@ -24,14 +24,14 @@ pub struct Count {
 impl Count {
     pub fn new(lang: Language, sep: Option<char>) -> Self {
         Count {
-            lang: lang,
+            lang,
             files: vec![],
             code: 0,
             comments: 0,
             blanks: 0,
             lines: 0,
             usafe: 0,
-            sep: sep,
+            sep,
         }
     }
 
