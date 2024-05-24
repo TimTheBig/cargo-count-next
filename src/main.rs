@@ -181,7 +181,7 @@
 #[macro_use]
 extern crate clap;
 #[cfg(feature = "color")]
-extern crate ansi_term;
+extern crate ansiterm;
 extern crate tabwriter;
 extern crate glob;
 extern crate regex;
