@@ -1,8 +1,6 @@
 # cargo-count
 
-[![Join the chat at https://gitter.im/kbknapp/cargo-count](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/kbknapp/cargo-count?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
-Linux: [![Build Status](https://travis-ci.org/kbknapp/cargo-count.svg?branch=master)](https://travis-ci.org/kbknapp/cargo-count)
+[![Rust](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml/badge.svg)](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml)
 
 A cargo subcommand for displaying line counts of source code in projects, including a niave `unsafe` counter for Rust source files. This subcommand was originally based off and inspired by the project [tokei](https://github.com/aaronepower/tokei) by [Aaronepower](https://github.com/aaronepower)
 
