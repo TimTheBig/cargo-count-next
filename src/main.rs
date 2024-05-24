@@ -190,7 +190,7 @@ extern crate gitignore;
 #[cfg(feature = "debug")]
 use std::env;
 
-use clap::{App, AppSettings, Arg, SubCommand};
+use clap::{App, Arg, SubCommand};
 
 use config::Config;
 use count::Counts;
@@ -214,16 +214,6 @@ fn main() {
              env::args().collect::<Vec<_>>());
     let m = App::new("cargo-count")
         .version(concat!("v", crate_version!()))
-    // We have to lie about our binary name since this will be a third party
-    // subcommand for cargo but we want usage strings to generated properly
-        .bin_name("cargo")
-    // Global version uses the version we supplied (Cargo.toml) for all subcommands
-    // as well
-        .settings(&[AppSettings::GlobalVersion,
-                    AppSettings::SubcommandRequired])
-    // We use a subcommand because everything parsed after `cargo` is sent to the
-    // third party
-    // plugin which will then be interpreted as a subcommand/positional arg by clap
         .subcommand(SubCommand::with_name("count")
             .author("Kevin K. <kbknapp@gmail.com>")
             .about("Displays line counts of code for cargo projects")
@@ -236,10 +226,10 @@ fn main() {
 -S, --follow-symlinks      'Follows symlinks and counts source files it finds [default: false]'
 [PATH]...                  'The files or directories (including children) to count (defaults to \
                             current working directory when omitted)'")
-            .arg(Arg::from_usage(
-                    "-s, --separator [CHAR]   'Set the thousands separator for pretty printing'")
-		.use_delimiter(false)
-                .validator(single_char))
+                            .arg(Arg::from_usage(
+                                "-s, --separator [CHAR]   'Set the thousands separator for pretty printing'")
+                    		.use_delimiter(false)
+                            .validator(|s| single_char(s.to_string())))
             .arg(Arg::from_usage("--utf8-rule [RULE]     'Sets the UTF-8 parsing rule'")
                 .default_value("strict")
                 .possible_values(&UTF8_RULES))

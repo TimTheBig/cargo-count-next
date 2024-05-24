@@ -30,7 +30,7 @@ pub struct Config<'a> {
 }
 
 impl<'a> Config<'a> {
-    pub fn from_matches(m: &'a ArgMatches<'a>) -> CliResult<Self> {
+    pub fn from_matches<'b: 'a>(m: &'b ArgMatches) -> CliResult<Self> {
         if let Some(ext_vec) = m.values_of("language") {
             for e in ext_vec {
                 if let None = Language::from_ext(e) {

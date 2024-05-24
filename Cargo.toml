@@ -1,6 +1,6 @@
 [package]
 name = "cargo-count"
-version = "0.2.4"
+version = "0.2.5"
 edition = "2021"
 authors = ["Kevin K <kbknapp@gmail.com>"]
 exclude = ["*.png"]
@@ -18,13 +18,13 @@ name = "cargo-count"
 travis-ci = {repository = "kbknapp/cargo-count"}
 
 [dependencies]
-clap = "2"
+clap = {version = "3.2", features = ["cargo"]}
 glob = "0.3"
 tabwriter = "1.4"
-regex = "0.2"
-gitignore = "1"
+regex = "1.10"
+gitignore = "1.0"
 ansi_term = {version = "0.12", optional = true}
-clippy    = {version = "0.0.302", optional = true}
+clippy = {version = "0.0.302", optional = true}
 
 [features]
 default = ["color"]
