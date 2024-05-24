@@ -1,8 +1,8 @@
 mod counts;
 
 
-use fmt;
-use language::Language;
+use crate::fmt;
+use crate::language::Language;
 pub use self::counts::Counts;
 
 use std::fmt as StdFmt;

@@ -1,6 +1,6 @@
 
 
-use fmt::Format;use std::error::Error;
+use crate::fmt::Format;use std::error::Error;
 use std::fmt::{Display, Formatter};
 use std::fmt::Result as FmtResult;
 
@@ -55,7 +55,7 @@ impl Error for CliError {
         }
     }
 
-    fn cause(&self) -> Option<&Error> {
+    fn cause(&self) -> Option<&dyn Error> {
         None
     }
 }

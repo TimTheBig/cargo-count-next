@@ -1,6 +1,6 @@
 
 
-use comment::Comment;
+use crate::comment::Comment;
 use std::fmt as StdFmt;
 
 #[derive(Debug, Eq, PartialEq)]

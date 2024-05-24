@@ -1,6 +1,7 @@
 [package]
 name = "cargo-count"
 version = "0.2.4"
+edition = "2021"
 authors = ["Kevin K <kbknapp@gmail.com>"]
 exclude = ["*.png"]
 description = "Cargo subcommand for displaying statistics about projects, such as code, comments, and unsafe counters"
@@ -17,13 +18,13 @@ name = "cargo-count"
 travis-ci = {repository = "kbknapp/cargo-count"}
 
 [dependencies]
-clap = "~2.11.2"
-glob = "~0.2"
-tabwriter = "~0.1"
-regex = "~0.1"
-gitignore = "~1"
-ansi_term = {version = "~0.9", optional = true}
-clippy    = {version = "=0.0.88", optional = true}
+clap = "2.11.2"
+glob = "0.2"
+tabwriter = "0.1"
+regex = "0.1"
+gitignore = "1"
+ansi_term = {version = "0.9", optional = true}
+clippy    = {version = "0.0.200", optional = true}
 
 [features]
 default = ["color"]

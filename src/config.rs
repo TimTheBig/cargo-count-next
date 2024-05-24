@@ -2,8 +2,8 @@
 
 use clap::ArgMatches;
 
-use error::{CliError, CliResult};
-use language::Language;
+use crate::error::{CliError, CliResult};
+use crate::language::Language;
 use std::env;
 use std::path::{Path, PathBuf};
 

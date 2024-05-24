@@ -1,13 +1,13 @@
 
 
-use comment::Comment;
-use config::{Config, Utf8Rule};
-use count::Count;
-use error::{CliError, CliResult};
-use fmt::{self, Format};
-use fsutil;
+use crate::comment::Comment;
+use crate::config::{Config, Utf8Rule};
+use crate::count::Count;
+use crate::error::{CliError, CliResult};
+use crate::fmt::{self, Format};
+use crate::fsutil;
 use gitignore;
-use language::Language;
+use crate::language::Language;
 use regex::Regex;
 use std::env;
 use std::f64;
