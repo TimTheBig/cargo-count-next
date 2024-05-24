@@ -210,18 +210,18 @@ impl<'c> Counts<'c> {
                                          bracket_count);
                             } else if let Some(caps) = re.captures(line) {
                                 let mut should_count = true;
-                                if let Some(before) = caps.at(1) {
+                                if let Some(before) = caps.get(1) {
                                     if let Some(single_v) = count.lang.single() {
                                         for s in single_v {
-                                            if before.contains(s) {
+                                            if before.as_str().contains(s) {
                                                 should_count = false;
                                                 break;
                                             }
                                         }
                                     }
                                     if let Some(multi) = count.lang.multi_start() {
-                                        if before.contains(multi) &&
-                                           !before.contains(count.lang.multi_end().unwrap()) {
+                                        if before.as_str().contains(multi) &&
+                                           !before.as_str().contains(count.lang.multi_end().unwrap()) {
                                             should_count = false;
                                         }
                                     }
@@ -229,14 +229,14 @@ impl<'c> Counts<'c> {
                                 if should_count {
                                     debugln!("It contained the keyword; usafe_line={:?}", line);
                                     count.usafe += 1;
-                                    if let Some(after) = caps.at(3) {
-                                        debugln!("after_usafe={:?}", after);
-                                        bracket_count = Counts::count_brackets(after, None);
+                                    if let Some(after) = caps.get(3) {
+                                        let after_str = after.as_str();
+                                        debugln!("after_usafe={:?}", after_str);
+                                        bracket_count = Counts::count_brackets(after_str, None);
                                         is_in_unsafe = bracket_count > 0;
-                                        debugln!("after counting brackets; is_in_unsafe={:?}; \
-                                                  bracket_count={:?}",
-                                                 is_in_unsafe,
-                                                 bracket_count);
+                                        debugln!("after counting brackets; is_in_unsafe={:?}; bracket_count={:?}",
+                                            is_in_unsafe,
+                                            bracket_count);
                                     }
                                 }
                             } else {
@@ -326,7 +326,7 @@ impl<'c> Counts<'c> {
         if self.tot > 0 {
             write!(io::stdout(),
                    "{}",
-                   String::from_utf8(w.unwrap()).ok().expect("failed to get valid UTF-8 String"))
+                   String::from_utf8(w.into_inner().unwrap()).ok().expect("failed to get valid UTF-8 String"))
                 .expect("failed to write output");
         } else {
             println!("\n\tNo source files were found matching the specified criteria");
