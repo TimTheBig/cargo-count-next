@@ -1,12 +1,18 @@
-# cargo-count
+# cargo-count-next
 
-[![Rust](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml/badge.svg)](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml)
+[![Rust-CI](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml/badge.svg)](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml)
+
+A updated fork of [kbknapp/cargo-count](https://github.com/kbknapp/cargo-count) using rust 2021, updated dependencies and more, to make it a more helpful demo repo for making cargo subcommands.
+
+Originall readme:
+
+# cargo-count
 
 A cargo subcommand for displaying line counts of source code in projects, including a niave `unsafe` counter for Rust source files. This subcommand was originally based off and inspired by the project [tokei](https://github.com/aaronepower/tokei) by [Aaronepower](https://github.com/aaronepower)
 
 ## Demo
 
-To count the source code in the [Rust](https://github.com/rust-lang/rust) repository (checkout `4c99649`), and print some naive statistics on how much "unsafe" code exists.
+To count the source code in the [Rust](https://github.com/rust-lang/rust) repository, clone it, and print some naive statistics on how much "unsafe" code exists.
 
 **NOTE:** The Rust repository is quite large, if you're on a slow internet connect consider using a smaller repository, such as the `cargo-count` repo.
 
