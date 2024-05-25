@@ -1,4 +1,4 @@
-the following is a list of contributors:
+the following is a list of contributors to the origanl repo:
 
 
 [<img alt="kbknapp" src="https://avatars1.githubusercontent.com/u/6942134?v=4&s=117" width="117">](https://github.com/kbknapp) |[<img alt="homu" src="https://avatars1.githubusercontent.com/u/10212162?v=4&s=117" width="117">](https://github.com/homu) |[<img alt="m-n" src="https://avatars1.githubusercontent.com/u/1393649?v=4&s=117" width="117">](https://github.com/m-n) |[<img alt="nabijaczleweli" src="https://avatars3.githubusercontent.com/u/6709544?v=4&s=117" width="117">](https://github.com/nabijaczleweli) |[<img alt="Aaronepower" src="https://avatars2.githubusercontent.com/u/4464295?v=4&s=117" width="117">](https://github.com/Aaronepower) |[<img alt="Vinatorul" src="https://avatars1.githubusercontent.com/u/6770624?v=4&s=117" width="117">](https://github.com/Vinatorul) |
