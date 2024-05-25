@@ -2,7 +2,7 @@
 name = "cargo-count-next"
 version = "0.3.0"
 edition = "2021"
-authors = ["Kevin K <kbknapp@gmail.com>, TimTheBig"]
+authors = ["TimTheBig, Kevin K <kbknapp@gmail.com>"]
 exclude = ["*.png"]
 description = "Cargo subcommand for displaying statistics about projects, such as code, comments, and unsafe counters"
 repository = "https://github.com/kbknapp/cargo-count.git"
@@ -10,9 +10,16 @@ readme = "README.md"
 license = "MIT"
 keywords = ["cargo", "subcommand", "statistics", "count", "lines"]
 categories = ["development-tools", "development-tools::cargo-plugins"]
+# The minimum supported version of rust(msrv):
+rust-version = "1.65.0"
 
 [[bin]]
-name = "cargo-count-next"
+name = "cargo-counter"
+path = "src/main.rs"
+
+[profile.release]
+opt-level = 3
+lto = true
 
 [dependencies]
 clap = {version = "3.2", features = ["cargo"]}

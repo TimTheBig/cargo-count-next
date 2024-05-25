@@ -1,6 +1,7 @@
 # cargo-count-next
 
 [![Rust-CI](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml/badge.svg)](https://github.com/TimTheBig/cargo-count-next/actions/workflows/rust.yml)
+![rustc version](https://img.shields.io/badge/rustc-1.65.0+-lightgray.svg)
 
 A updated fork of [kbknapp/cargo-count](https://github.com/kbknapp/cargo-count) using rust 2021, updated dependencies and more, to make it a more helpful demo repo for making cargo subcommands.
 
