@@ -32,15 +32,18 @@ impl CliError {
             wlnerr!("{}", self);
             ::std::process::exit(1)
         } else {
-            println!("{}", self);
+            println!("{self}");
             ::std::process::exit(0)
         }
     }
 }
 
 impl Display for CliError {
-    fn fmt(&self, f: &mut Formatter) -> FmtResult {
-        write!(f, "{} {}", Format::Error("error:"), self.to_string())
+    fn fmt(&self, f: &mut Formatter<'_>) -> FmtResult {
+        match self {
+            CliError::Generic(ref d) | CliError::UnknownExt(ref d) => write!(f, "{} {}", Format::Error("error:"), d),
+            CliError::Unknown => write!(f, "An unknown fatal error has occurred, please consider filing a bug-report!"),
+        }
     }
 }
 

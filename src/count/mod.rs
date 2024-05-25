@@ -71,7 +71,7 @@ impl Deref for Count {
 }
 
 impl StdFmt::Display for Count {
-    fn fmt(&self, f: &mut StdFmt::Formatter) -> StdFmt::Result {
+    fn fmt(&self, f: &mut StdFmt::Formatter<'_>) -> StdFmt::Result {
         write!(
             f,
             "{}\t{}\t{}\t{}\t{}\t{}",

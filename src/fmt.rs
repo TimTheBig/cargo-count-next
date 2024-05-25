@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 #[cfg(all(feature = "color", not(target_os = "windows")))]
 use ansiterm::ANSIString;
 
@@ -43,7 +45,7 @@ impl<T: fmt::Display> Format<T> {
 
 #[cfg(any(not(feature = "color"), target_os = "windows"))]
 impl<T: fmt::Display> fmt::Display for Format<T> {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}", &self.format())
     }
 }

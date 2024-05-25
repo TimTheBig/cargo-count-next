@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use clap::ArgMatches;
 
 use crate::error::{CliError, CliResult};
@@ -15,6 +17,7 @@ arg_enum! {
 }
 
 #[derive(Debug)]
+#[allow(clippy::struct_excessive_bools)]
 pub struct Config<'a> {
     pub verbose: bool,
     pub all: bool,
@@ -31,7 +34,7 @@ impl<'a> Config<'a> {
     pub fn from_matches<'b: 'a>(m: &'b ArgMatches) -> CliResult<Self> {
         if let Some(ext_vec) = m.values_of("language") {
             for e in ext_vec {
-                if let None = Language::from_ext(e) {
+                if Language::from_ext(e).is_none() {
                     return Err(CliError::UnknownExt(format!(
                         "unsupported source code extension \
                                                              '{}'",

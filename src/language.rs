@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use crate::comment::Comment;
 use std::fmt as StdFmt;
 
@@ -102,7 +104,7 @@ impl Language {
 }
 
 impl StdFmt::Display for Language {
-    fn fmt(&self, f: &mut StdFmt::Formatter) -> StdFmt::Result {
+    fn fmt(&self, f: &mut StdFmt::Formatter<'_>) -> StdFmt::Result {
         write!(f, "{}", self.name())
     }
 }

@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 macro_rules! cli_try {
     ($t:expr) => {{
         match $t {

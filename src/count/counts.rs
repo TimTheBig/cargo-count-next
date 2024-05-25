@@ -1,3 +1,5 @@
+#![warn(clippy::all, clippy::pedantic)]
+
 use crate::comment::Comment;
 use crate::config::{Config, Utf8Rule};
 use crate::count::Count;
@@ -26,7 +28,7 @@ pub struct Counts<'c> {
 }
 
 impl<'c> Counts<'c> {
-    pub fn new(cfg: &'c Config) -> Self {
+    pub fn new(cfg: &'c Config<'_>) -> Self {
         Counts {
             cfg,
             counts: vec![],
@@ -78,7 +80,7 @@ impl<'c> Counts<'c> {
                     debugln!("Extension is valid");
                     let mut found = false;
                     debugln!("Searching for previous entries of that type");
-                    for l in self.counts.iter_mut() {
+                    for l in &mut self.counts {
                         if l.lang == pos_lang {
                             debugln!("Found");
                             found = true;
@@ -100,6 +102,7 @@ impl<'c> Counts<'c> {
     }
 
     #[cfg_attr(feature = "lints", allow(cyclomatic_complexity, trivial_regex))]
+    #[allow(clippy::too_many_lines)]
     pub fn count(&mut self) -> CliResult<()> {
         for count in self.counts.iter_mut() {
             debugln!("iter; count={:?};", count);
@@ -302,7 +305,7 @@ impl<'c> Counts<'c> {
                     count.comments(),
                     count.code(),
                     if (usafe_per - 00f64).abs() < f64::EPSILON {
-                        "".to_owned()
+                        String::new()
                     } else {
                         format!("{} ({:.2}%)", count.usafe(), usafe_per)
                     }
@@ -332,7 +335,7 @@ impl<'c> Counts<'c> {
                     (self.tot_usafe as f64 / self.tot_code as f64) * 100.00f64
                 )
             } else {
-                "".to_owned()
+                String::new()
             }
         ));
 

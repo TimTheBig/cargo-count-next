@@ -1,3 +1,4 @@
+#![warn(clippy::all, clippy::pedantic)]
 use gitignore::File;
 
 use std::fs;
@@ -9,7 +10,7 @@ pub fn get_all_files(
     path: &PathBuf,
     exclude: &[PathBuf],
     follow_links: bool,
-    gitignore: &Option<File>,
+    gitignore: &Option<File<'_>>,
 ) {
     debugln!(
         "executing; get_all_files; path={:?}; exclude={:?}; all={:?}",
@@ -36,13 +37,7 @@ pub fn get_all_files(
             for entry in dir {
                 let entry = entry.unwrap();
                 let file_path = entry.path();
-                get_all_files(
-                    v,
-                    &file_path.to_path_buf(),
-                    exclude,
-                    follow_links,
-                    gitignore,
-                );
+                get_all_files(v, &file_path.clone(), exclude, follow_links, gitignore);
             }
         } else {
             debugln!("It's a file");
@@ -56,17 +51,11 @@ pub fn get_all_files(
                 if let Ok(result) = get_metadata(&file_path, follow_links) {
                     if result.is_dir() {
                         debugln!("It's a dir");
-                        let dir = fs::read_dir(&path).unwrap();
+                        let dir = fs::read_dir(path).unwrap();
                         for entry in dir {
                             let entry = entry.unwrap();
                             let file_path = entry.path();
-                            get_all_files(
-                                v,
-                                &file_path.to_path_buf(),
-                                exclude,
-                                follow_links,
-                                gitignore,
-                            );
+                            get_all_files(v, &file_path.clone(), exclude, follow_links, gitignore);
                         }
                     } else {
                         debugln!("It's a file");

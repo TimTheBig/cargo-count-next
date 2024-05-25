@@ -183,15 +183,12 @@
     unused_import_braces,
     unused_qualifications
 )]
+#![warn(clippy::all, clippy::pedantic, rust_2018_idioms)]
 
 #[macro_use]
 extern crate clap;
 #[cfg(feature = "color")]
 extern crate ansiterm;
-extern crate gitignore;
-extern crate glob;
-extern crate regex;
-extern crate tabwriter;
 
 #[cfg(feature = "debug")]
 use std::env;
@@ -240,7 +237,7 @@ fn main() {
                             .validator(|s| single_char(s.to_string())))
             .arg(Arg::from_usage("--utf8-rule [RULE]     'Sets the UTF-8 parsing rule'")
                 .default_value("strict")
-                .possible_values(&UTF8_RULES))
+                .possible_values(UTF8_RULES))
             .after_help("\
 When using '--exclude <PATH>' the path given can either be relative to the current directory, or \
 absolute. When '--exclude <PATH>' is a file or path, it must be relative to the current directory \
@@ -254,13 +251,13 @@ the current directory you could do '--exclude */test.rs'."))
     if let Some(m) = m.subcommand_matches("count") {
         let cfg = Config::from_matches(m).unwrap_or_else(|e| e.exit());
         println!("Gathering information...");
-        if let Err(e) = execute(cfg) {
+        if let Err(e) = execute(&cfg) {
             e.exit();
         }
     }
 }
 
-fn execute(cfg: Config) -> CliResult<()> {
+fn execute(cfg: &Config<'_>) -> CliResult<()> {
     debugln!("executing; cmd=execute;");
     verboseln!(cfg, "{}: {:?}", Format::Warning("Excluding"), cfg.exclude);
     verbose!(
@@ -273,13 +270,13 @@ fn execute(cfg: Config) -> CliResult<()> {
                 cfg.exts.as_ref().unwrap().join(", ")
             )
         } else {
-            "".to_owned()
+            String::new()
         }
     );
 
     debugln!("Checking for files or dirs to count from cli");
 
-    let mut counts = Counts::new(&cfg);
+    let mut counts = Counts::new(cfg);
     counts.fill_from();
     cli_try!(counts.count());
     cli_try!(counts.write_results());
