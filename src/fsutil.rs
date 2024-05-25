@@ -33,10 +33,10 @@ pub fn get_all_files(
         debugln!("Found");
         if result.is_dir() {
             debugln!("It's a dir");
-            let dir = fs::read_dir(path).unwrap();
+            let dir: fs::ReadDir = fs::read_dir(path).unwrap();
             for entry in dir {
-                let entry = entry.unwrap();
-                let file_path = entry.path();
+                let entry: fs::DirEntry = entry.unwrap();
+                let file_path: PathBuf = entry.path();
                 get_all_files(v, &file_path.clone(), exclude, follow_links, gitignore);
             }
         } else {
@@ -51,10 +51,10 @@ pub fn get_all_files(
                 if let Ok(result) = get_metadata(&file_path, follow_links) {
                     if result.is_dir() {
                         debugln!("It's a dir");
-                        let dir = fs::read_dir(path).unwrap();
+                        let dir: fs::ReadDir = fs::read_dir(path).unwrap();
                         for entry in dir {
-                            let entry = entry.unwrap();
-                            let file_path = entry.path();
+                            let entry: fs::DirEntry = entry.unwrap();
+                            let file_path: PathBuf = entry.path();
                             get_all_files(v, &file_path.clone(), exclude, follow_links, gitignore);
                         }
                     } else {

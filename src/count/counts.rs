@@ -43,8 +43,8 @@ impl<'c> Counts<'c> {
 
     pub fn fill_from(&mut self) {
         debugln!("executing; fill_from; cfg={:?}", self.cfg);
-        let cd;
-        let gitignore = if self.cfg.all {
+        let cd: PathBuf;
+        let gitignore: Option<gitignore::File<'_>> = if self.cfg.all {
             None
         } else {
             cd = env::current_dir().unwrap().join(".gitignore");
@@ -52,7 +52,7 @@ impl<'c> Counts<'c> {
         };
         for path in &self.cfg.to_count {
             debugln!("iter; path={:?};", path);
-            let mut files = vec![];
+            let mut files: Vec<PathBuf> = vec![];
             fsutil::get_all_files(
                 &mut files,
                 path,
@@ -63,7 +63,7 @@ impl<'c> Counts<'c> {
 
             for file in files {
                 debugln!("iter; file={:?};", file);
-                let extension = match Path::new(&file).extension() {
+                let extension: &str = match Path::new(&file).extension() {
                     Some(result) => {
                         if let Some(ref exts) = self.cfg.exts {
                             if !exts.contains(&result.to_str().unwrap_or("")) {
@@ -78,7 +78,7 @@ impl<'c> Counts<'c> {
                 debugln!("found extension: {:?}", extension);
                 if let Some(pos_lang) = Language::from_ext(extension) {
                     debugln!("Extension is valid");
-                    let mut found = false;
+                    let mut found: bool = false;
                     debugln!("Searching for previous entries of that type");
                     for l in &mut self.counts {
                         if l.lang == pos_lang {
@@ -90,7 +90,7 @@ impl<'c> Counts<'c> {
                     }
                     if !found {
                         debugln!("Not found, creating new");
-                        let mut c = Count::new(pos_lang, self.cfg.thousands);
+                        let mut c: Count = Count::new(pos_lang, self.cfg.thousands);
                         c.add_file(PathBuf::from(&file));
                         self.counts.push(c);
                     }
@@ -106,16 +106,16 @@ impl<'c> Counts<'c> {
     pub fn count(&mut self) -> CliResult<()> {
         for count in self.counts.iter_mut() {
             debugln!("iter; count={:?};", count);
-            let re = if let Some(kw) = count.lang.unsafe_keyword() {
+            let re: Regex = if let Some(kw) = count.lang.unsafe_keyword() {
                 Regex::new(&format!("(.*?)([:^word:]{}[:^word:])(.*)", kw)).unwrap()
             } else {
                 Regex::new("").unwrap()
             };
             for file in count.files.iter() {
                 debugln!("iter; file={:?};", file);
-                let mut buffer = String::new();
+                let mut buffer: String = String::new();
 
-                let mut file_ref = cli_try!(File::open(file));
+                let mut file_ref: File = cli_try!(File::open(file));
 
                 match self.cfg.utf8_rule {
                     Utf8Rule::Ignore => {
@@ -124,7 +124,7 @@ impl<'c> Counts<'c> {
                         }
                     }
                     Utf8Rule::Lossy => {
-                        let mut vec_buf = vec![];
+                        let mut vec_buf: Vec<u8> = vec![];
                         cli_try!(file_ref.read_to_end(&mut vec_buf));
                         buffer = String::from_utf8_lossy(&vec_buf).into_owned();
                     }
@@ -132,12 +132,12 @@ impl<'c> Counts<'c> {
                         cli_try!(file_ref.read_to_string(&mut buffer));
                     }
                 }
-                let mut is_in_comments = false;
-                let mut is_in_unsafe = false;
+                let mut is_in_comments: bool = false;
+                let mut is_in_unsafe: bool = false;
                 let mut bracket_count: i64 = 0;
 
                 'new_line: for line in buffer.lines() {
-                    let line = line.trim();
+                    let line: &str = line.trim();
                     debugln!("iter; line={:?};", line);
                     count.lines += 1;
 
@@ -216,7 +216,7 @@ impl<'c> Counts<'c> {
                                     bracket_count
                                 );
                             } else if let Some(caps) = re.captures(line) {
-                                let mut should_count = true;
+                                let mut should_count: bool = true;
                                 if let Some(before) = caps.get(1) {
                                     if let Some(single_v) = count.lang.single() {
                                         for s in single_v {
@@ -240,7 +240,7 @@ impl<'c> Counts<'c> {
                                     debugln!("It contained the keyword; usafe_line={:?}", line);
                                     count.usafe += 1;
                                     if let Some(after) = caps.get(3) {
-                                        let after_str = after.as_str();
+                                        let after_str: &str = after.as_str();
                                         debugln!("after_usafe={:?}", after_str);
                                         bracket_count = Counts::count_brackets(after_str, None);
                                         is_in_unsafe = bracket_count > 0;
@@ -277,7 +277,7 @@ impl<'c> Counts<'c> {
     }
 
     pub fn write_results(&mut self) -> CliResult<()> {
-        let mut w = TabWriter::new(vec![]);
+        let mut w: TabWriter<Vec<u8>> = TabWriter::new(vec![]);
         cli_try!(write!(
             w,
             "\tLanguage\tFiles\tLines\tBlanks\tComments\tCode{}\n",
@@ -290,7 +290,7 @@ impl<'c> Counts<'c> {
         ));
         for count in &self.counts {
             if self.cfg.usafe {
-                let usafe_per = if count.code != 0 {
+                let usafe_per: f64 = if count.code != 0 {
                     (count.usafe as f64 / count.code as f64) * 100.00f64
                 } else {
                     0f64

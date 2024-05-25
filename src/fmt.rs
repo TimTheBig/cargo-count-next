@@ -52,12 +52,12 @@ impl<T: fmt::Display> fmt::Display for Format<T> {
 
 pub fn format_number(n: u64, sep: Option<char>) -> String {
     debugln!("executing; format_number; n={}", n);
-    let s = format!("{}", n);
+    let s: String = format!("{}", n);
     if let Some(sep) = sep {
         debugln!("There was a separator {}", sep);
-        let mut ins_sep = s.len() % 3;
+        let mut ins_sep: usize = s.len() % 3;
         ins_sep = if ins_sep == 0 { 3 } else { ins_sep };
-        let mut ret = vec![];
+        let mut ret: Vec<char> = vec![];
         for (i, c) in s.chars().enumerate() {
             debugln!("iter; c={}; ins_sep={}; ret={:?}", c, ins_sep, ret);
             if ins_sep == 0 && i != 0 {

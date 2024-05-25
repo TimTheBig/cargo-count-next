@@ -51,9 +51,9 @@ impl<'a> Config<'a> {
             utf8_rule: value_t!(m.value_of("utf8-rule"), Utf8Rule).unwrap_or(Utf8Rule::Strict),
             exclude: if let Some(v) = m.values_of("exclude") {
                 debugln!("There are some");
-                let mut ret = vec![];
+                let mut ret: Vec<PathBuf> = vec![];
                 for p in v {
-                    let pb = Path::new(p);
+                    let pb: &Path = Path::new(p);
                     if pb.is_relative() {
                         ret.push(cli_try!(env::current_dir()).join(p));
                     } else {
@@ -69,7 +69,7 @@ impl<'a> Config<'a> {
             },
             to_count: if let Some(v) = m.values_of("PATH") {
                 debugln!("There are some");
-                let mut ret = vec![];
+                let mut ret: Vec<PathBuf> = vec![];
                 for p in v {
                     ret.push(PathBuf::from(p));
                 }

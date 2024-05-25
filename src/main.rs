@@ -217,7 +217,7 @@ fn main() {
         "executing; cmd=cargo-count; args={:?}",
         env::args().collect::<Vec<_>>()
     );
-    let m = App::new("cargo-count")
+    let m: clap::ArgMatches = App::new("cargo-count")
         .version(concat!("v", crate_version!()))
         .subcommand(SubCommand::with_name("count")
             .author("Kevin K. <kbknapp@gmail.com>")
@@ -249,7 +249,7 @@ the current directory you could do '--exclude */test.rs'."))
         .get_matches();
 
     if let Some(m) = m.subcommand_matches("count") {
-        let cfg = Config::from_matches(m).unwrap_or_else(|e| e.exit());
+        let cfg: Config<'_> = Config::from_matches(m).unwrap_or_else(|e| e.exit());
         println!("Gathering information...");
         if let Err(e) = execute(&cfg) {
             e.exit();
@@ -276,7 +276,7 @@ fn execute(cfg: &Config<'_>) -> CliResult<()> {
 
     debugln!("Checking for files or dirs to count from cli");
 
-    let mut counts = Counts::new(cfg);
+    let mut counts: Counts<'_> = Counts::new(cfg);
     counts.fill_from();
     cli_try!(counts.count());
     cli_try!(counts.write_results());
